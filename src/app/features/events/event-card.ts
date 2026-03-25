@@ -12,9 +12,9 @@ import { RouterLink } from '@angular/router';
       <!-- Thumbnail Image -->
       <div class="relative h-48 w-full bg-gray-200">
         <img
-          [NgSrc]="image()"
+          [ngSrc]="image()"
           width="500"
-          height="2002
+          height="200"
           priority
           class="object-cover"
           alt="Event Thumbnail"
