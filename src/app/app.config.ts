@@ -21,13 +21,15 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
 
     { provide: API_URL, useValue: 'http://localhost:3000' },
-    // {
-    //   provide: IMAGE_LOADER,
-    //   useValue: (config: ImageLoaderConfig) => {
-    //     const src = config.src.replace('/images/', '');
-    //     return `https://static-assets.dev/cdn-cgi/image/width=${config.width},format=auto/https://storage.googleapis.com/images-cdn-e0395.firebasestorage.app/${src}`;
-    //   },
-    // },
-    // provideClientHydration(withEventReplay()),
+
+    {
+      provide: IMAGE_LOADER,
+      useValue: (config: ImageLoaderConfig) => {
+        const src = config.src.replace('/images/', '');
+        return `https://static-assets.dev/cdn-cgi/image/width=${config.width},format=auto/https://storage.googleapis.com/images-cdn-e0395.firebasestorage.app/${src}`;
+      },
+    },
+
+    provideClientHydration(withEventReplay()),
   ],
 };
