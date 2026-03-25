@@ -9,27 +9,27 @@ import { EventsService } from '../../core/events.sevice';
   template: `
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-4">Upcoming Events</h1>
-      <!-- TODO Mod 1: Add SearchBar here -->
       <app-search-bar [(query)]="searchQuery" />
+
       <p class="text-gray-500 mt-2">Searching for: {{ searchQuery() }}</p>
     </div>
 
-    <!-- TODO Mod 2: Wrap in @if (events.isLoading()) -->
+    <!-- Error -->
     @if (events.error()) {
       <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-6">
         Failed to load events. Is the server running?
       </div>
     }
 
+    <!-- Loading -->
     @if (events.isLoading()) {
       <div class="text-center py-12 text-gray-500 animate-pulse">Loading events...</div>
     }
 
+    <!-- Data -->
     @if (events.hasValue()) {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- TODO Mod 2: Use @for to iterate over resource -->
         @for (event of events.value(); track event.id) {
-          <!-- Static Placeholders for initial verify -->
           <app-event-card
             [id]="event.id"
             [title]="event.title"
@@ -48,7 +48,6 @@ export class EventList {
   private eventsService = inject(EventsService);
 
   searchQuery = signal('');
-  // TODO Mod 2: Inject Service and use resource()
 
   events = this.eventsService.getEventsResource(this.searchQuery);
 

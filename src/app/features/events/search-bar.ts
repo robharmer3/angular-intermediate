@@ -16,6 +16,5 @@ import { FormsModule } from '@angular/forms';
   `,
 })
 export class SearchBar {
-  // TODO add model
   query = model('');
 }

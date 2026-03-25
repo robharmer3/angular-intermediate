@@ -11,24 +11,28 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
   imports: [FormField],
   template: `
     <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
+      <!-- Heading -->
       <h2 class="text-2xl font-bold mb-6 text-gray-800">Create New Event</h2>
 
-      <!-- TODO Mod 4: Bind [group] -->
+      <!-- Form -->
       <form (submit)="onSubmit($event)" class="space-y-6">
+        <!-- Title -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Event Title</label>
-          <!-- TODO Mod 4: Bind [control] -->
           <input
             [formField]="form.title"
             type="text"
             class="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
             placeholder="e.g. Angular Workshop"
           />
+
+          <!-- Error -->
           @if (form.title().touched() && form.title().invalid()) {
             <p class="text-red-500 text-sm mt-1">{{ form.title().errors()[0].message }}</p>
           }
         </div>
 
+        <!-- Description -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
           <textarea
@@ -37,11 +41,13 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
             class="w-full px-4 py-2 boarder rounded-md outline-none"
           ></textarea>
 
+          <!-- Error -->
           @if (form.description().touched() && form.description().invalid()) {
             <p class="text-red-500 text-sm mt-1">{{ form.description().errors()[0].message }}</p>
           }
         </div>
 
+        <!-- Date -->
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label>Date</label>
@@ -51,6 +57,8 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
               class="w-full px-4 py-2 border rounded-md"
             />
           </div>
+
+          <!-- Location -->
           <div>
             <label>Location</label>
             <input
@@ -61,8 +69,7 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
           </div>
         </div>
 
-        <!-- TODO Mod 4: Dynamic Speaker Array -->
-
+        <!-- Speaker -->
         <div class="border-t border-gray-100 pt-4">
           <div class="flex justify-between items-center mb-2">
             <label class="block text-sm font-medium text-gray-700">Speakers</label>
@@ -76,10 +83,8 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
           </div>
 
           <div class="space-y-2">
-            <!-- Iterate over the SOURCE data to get the index -->
             @for (speaker of eventData().speakers; track $index) {
               <div class="flex gap-2">
-                <!-- Bind to form.speakers[index] -->
                 <input
                   [formField]="form.speakers[$index]"
                   type="text"
@@ -95,6 +100,7 @@ interface CreateEventForm extends Omit<DevFestEvent, 'id'> {}
           </div>
         </div>
 
+        <!-- Button -->
         <div class="flex justify-end gap-4 pt-4">
           <button type="button" class="px-4 py-2 text-gray-600 hover:text-gray-800">Cancel</button>
           <button
@@ -125,9 +131,8 @@ export class CreateEvent {
   readonly form = form(this.eventData, (root) => {
     required(root.title, { message: 'Title is required' });
 
-    debounce(root.description, 1000);
-
     disabled(root.description, ({ valueOf }) => !valueOf(root.title));
+    debounce(root.description, 1000);
 
     required(root.description, { message: 'Description is required' });
     minLength(root.description, 10, { message: 'Description must be at least 10 chars' });
@@ -136,7 +141,6 @@ export class CreateEvent {
 
     required(root.location, { message: 'Location is required' });
   });
-  // TODO Mod 4: form = form(...)
 
   addSpeaker() {
     this.eventData.update((current) => ({
@@ -162,7 +166,7 @@ export class CreateEvent {
     this.eventService.createEvent(payload).subscribe({
       next: () => {
         alert('Event Created!');
-        this.router.navigate(['/']);
+        this.router.navigate([`/`]);
       },
       error: (err) => {
         console.error(err);

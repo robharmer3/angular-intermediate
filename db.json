@@ -37,17 +37,6 @@
       ]
     },
     {
-      "title": "Hello Test - RH",
-      "description": "don't panic...this is only a test",
-      "date": "2026-12-02T13:00",
-      "location": "Bolton",
-      "speakers": [
-        "Rob Harmer"
-      ],
-      "image": "/images/event4.png",
-      "id": "hC-mPVz"
-    },
-    {
       "title": "RH test 2",
       "description": "this is still a test",
       "date": "2026-03-13T14:15",

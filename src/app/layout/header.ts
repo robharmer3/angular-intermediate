@@ -28,7 +28,6 @@ import { CartService } from '../core/cart.service';
             Admin
           </a>
 
-          <!-- Day 1 Mod 5: Cart Counter will go here -->
           <button
             class="bg-white text-blue-700 px-4 py-2 rounded-full font-bold shadow hover:bg-gray-100 transition"
           >
