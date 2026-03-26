@@ -47,17 +47,35 @@ import { CartService } from '../../core/cart.service';
           <!-- Right Side -->
           <div class="bg-gray-50 p-6 rounded-xl h-fit border border-gray-100">
             <!-- Image   -->
-            <div class="h-48 bg-gray-200 rounded mb-4 overflow-hidden">
-              <img [src]="event.image" class="w-full h-full object-cover" />
-            </div>
+            @defer (hydrate on viewport) {
+              <div class="h-48 bg-gray-200 rounded mb-4 overflow-hidden">
+                <img
+                  [src]="'/images/venue-map.png'"
+                  class="w-full h-full object-cover"
+                  alt="Event Map"
+                />
+              </div>
+            } @placeholder {
+              <div
+                class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
+              >
+                <span class="test-gray-400">Map Loading...</span>
+              </div>
+            }
 
             <!-- Button   -->
-            <button
-              (click)="addToCart()"
-              class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition"
-            >
-              Buy Tickets
-            </button>
+            @defer (hydrate on interaction) {
+              <button
+                (click)="addToCart()"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 shadow-lg transition"
+              >
+                Buy Tickets
+              </button>
+            } @placeholder {
+              <button class="w-full bg-blue-600 test-white py-3 rounded-lg font-bold opacity-90">
+                Buy Ticket
+              </button>
+            }
           </div>
         </div>
       }

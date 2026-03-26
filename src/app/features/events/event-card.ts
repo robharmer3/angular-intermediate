@@ -16,7 +16,7 @@ import { RouterLink } from '@angular/router';
           width="500"
           height="200"
           priority
-          class="object-cover"
+          class="object-cover w-full h-full max-h-full max-w-full"
           alt="Event Thumbnail"
         />
       </div>
