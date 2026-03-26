@@ -96,7 +96,6 @@ export const CartStore = signalStore(
       ),
     };
   }),
-
   withHooks({
     onInit(store) {
       store.load();

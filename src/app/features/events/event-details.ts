@@ -47,27 +47,22 @@ import { CartStore } from '../../core/cart.store';
 
             <app-tab-group>
               <app-tab label="Overview">
-                <!-- Description   -->
                 <p class="text-gray-700 leading-relaxed text-lg">
                   {{ event.description }}
                 </p>
               </app-tab>
 
               <app-tab label="Venue">
-                <!-- Image   -->
+                <p class="mb-4 text-gray-600">
+                  {{ event.location }}
+                </p>
                 @defer (hydrate on viewport) {
-                  <div class="h-48 bg-gray-200 rounded mb-4 overflow-hidden">
-                    <img
-                      [src]="'/images/venue-map.png'"
-                      class="w-full h-full object-cover"
-                      alt="Event Map"
-                    />
+                  <div class="h-64 bg-gray-200 rounded mb-4">
+                    <img [src]="'/images/venue-map.png'" alt="Event Map" />
                   </div>
                 } @placeholder {
-                  <div
-                    class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
-                  >
-                    <span class="test-gray-400">Map Loading...</span>
+                  <div class="h-64 bg-gray-100 flex items-center justify-center ">
+                    Loading Map...
                   </div>
                 }
               </app-tab>

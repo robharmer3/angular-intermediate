@@ -54,6 +54,7 @@ import { ClickLogger } from '../../shared/directives/click-logger';
         <div class="flex justify-between items-center mt-4">
           <!-- Like Button -->
           <button
+            id="LikeBtn"
             (click)="toggleFavourite()"
             [class.text-red-500]="isFavourite()"
             class="text-gray-400 hover:text-red-500 transition-colors cursor-pointer"
@@ -63,12 +64,6 @@ import { ClickLogger } from '../../shared/directives/click-logger';
           </button>
 
           <!-- Remove Button -->
-          <button
-            class="text-gray-400 text-sm hover:text-gray-600 cursor-pointer"
-            (click)="removeEvent()"
-          >
-            Remove
-          </button>
         </div>
 
         <!-- Details Button (Footer) -->
