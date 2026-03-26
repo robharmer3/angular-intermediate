@@ -3,10 +3,12 @@ import { Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EventsService } from '../../core/events.sevice';
 import { CartService } from '../../core/cart.service';
+import { TabGroup } from '../../shared/tabs/tab-group';
+import { Tab } from '../../shared/tabs/tab';
 
 @Component({
   selector: 'app-event-details',
-  imports: [CommonModule, RouterLink, DatePipe],
+  imports: [CommonModule, RouterLink, DatePipe, TabGroup, Tab],
   template: `
     <div class="bg-white rounded-xl shadow-lg p-8 max-w-4xl mx-auto min-h-[600px]">
       <!-- Back Button -->
@@ -38,32 +40,58 @@ import { CartService } from '../../core/cart.service';
               {{ event.date | date: 'fullDate' }} • {{ event.location }}
             </p>
 
-            <!-- Description   -->
-            <p class="text-gray-700 leading-relaxed text-lg">
-              {{ event.description }}
-            </p>
+            <app-tab-group>
+              <app-tab label="Overview">
+                <!-- Description   -->
+                <p class="text-gray-700 leading-relaxed text-lg">
+                  {{ event.description }}
+                </p>
+              </app-tab>
+
+              <app-tab label="Venue">
+                <!-- Image   -->
+                @defer (hydrate on viewport) {
+                  <div class="h-48 bg-gray-200 rounded mb-4 overflow-hidden">
+                    <img
+                      [src]="'/images/venue-map.png'"
+                      class="w-full h-full object-cover"
+                      alt="Event Map"
+                    />
+                  </div>
+                } @placeholder {
+                  <div
+                    class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
+                  >
+                    <span class="test-gray-400">Map Loading...</span>
+                  </div>
+                }
+              </app-tab>
+
+              <app-tab label="Speakers">
+                @if (event.speakers.length > 0) {
+                  <ul class="space-y-3">
+                    @for (speaker of event.speakers; track speaker) {
+                      <li class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                        <div
+                          class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold"
+                        >
+                          {{ speaker.charAt(0) }}
+                        </div>
+                        <span class="text-gray-700 font-medium">{{ speaker }}</span>
+                      </li>
+                    }
+                  </ul>
+                } @else {
+                  <div class="p-4 bg-yellow-50 text-yellow-800 rounded">
+                    Speaker list coming soon.
+                  </div>
+                }
+              </app-tab>
+            </app-tab-group>
           </div>
 
-          <!-- Right Side -->
+          <!-- Button   -->
           <div class="bg-gray-50 p-6 rounded-xl h-fit border border-gray-100">
-            <!-- Image   -->
-            @defer (hydrate on viewport) {
-              <div class="h-48 bg-gray-200 rounded mb-4 overflow-hidden">
-                <img
-                  [src]="'/images/venue-map.png'"
-                  class="w-full h-full object-cover"
-                  alt="Event Map"
-                />
-              </div>
-            } @placeholder {
-              <div
-                class="h-140 bg-gray-100 rounded mb-4 flex items-center justify-center border-2 border-dashed border-gray-300"
-              >
-                <span class="test-gray-400">Map Loading...</span>
-              </div>
-            }
-
-            <!-- Button   -->
             @defer (hydrate on interaction) {
               <button
                 (click)="addToCart()"

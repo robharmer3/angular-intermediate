@@ -1,16 +1,17 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, input, output, computed, linkedSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { UiCard } from '../../shared/ui-card';
+import { ClickLogger } from '../../shared/directives/click-logger';
 
 @Component({
   selector: 'app-event-card',
-  imports: [RouterLink, DatePipe, NgOptimizedImage],
+  hostDirectives: [{ directive: ClickLogger, inputs: ['eventName: trackingId'] }],
+  imports: [RouterLink, DatePipe, NgOptimizedImage, UiCard],
   template: `
-    <div
-      class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-    >
+    <app-ui-card>
       <!-- Thumbnail Image -->
-      <div class="relative h-48 w-full bg-gray-200">
+      <div card-header class="relative h-48 w-full bg-gray-200">
         <img
           [ngSrc]="image()"
           width="500"
@@ -71,7 +72,7 @@ import { RouterLink } from '@angular/router';
         </div>
 
         <!-- Details Button (Footer) -->
-        <div class="mt-4 pt-4 border-t border-gray-100 text-right">
+        <div card-footer class="mt-4 text-right">
           <a
             [routerLink]="['/event', id()]"
             class="text-blue-600 font-medium hover:underline cursor-pointer"
@@ -80,7 +81,7 @@ import { RouterLink } from '@angular/router';
           </a>
         </div>
       </div>
-    </div>
+    </app-ui-card>
   `,
 })
 export class EventCard {
